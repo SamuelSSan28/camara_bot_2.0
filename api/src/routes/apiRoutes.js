@@ -3,7 +3,7 @@ const ApiController = require('../controllers/ApiController');
 const apiController = new ApiController();
 
 
-router.get('/', apiController.home);
-router.get('/teste', apiController.index);
+router.get('/', apiController.index);
+router.post('/gerar_imagem', apiController.gerar_imagem);
 
 module.exports = router;
