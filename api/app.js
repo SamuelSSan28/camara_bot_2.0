@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const routes = require('./src/routes/apiRoutes');
 const app = express();
-
+require("dotenv").config({path: __dirname + '/.env'});
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
