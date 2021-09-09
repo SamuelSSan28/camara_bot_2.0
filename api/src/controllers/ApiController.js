@@ -1,4 +1,5 @@
 const create_image = require('../utils/createImage');
+const post_instagram = require('../utils/postInstagram')
 
 class ApiController{
     async gerar_imagem(req,res){
@@ -16,6 +17,16 @@ class ApiController{
     async index(req,res){
         var obj = { message: 'Rotas funcionando!' }
         return res.send(obj)
+    }
+
+    async post_inst(req,res){
+        try{
+            const path = req.body.path;
+            const result = await post_instagram(path);   
+            return res.status(200).json({ path: result })
+        }catch(err) {
+            return res.status(400).json({ error: 'Erro em postar imagens.' + err.message })
+        }  
     }
 }
 
