@@ -29,7 +29,8 @@ flow.set_dependencies(request_api_2, keyword_tasks={"ploads":request_api_1,
                                                   "url":unmapped(f"http://{MY_ENDPOINT}/postar"),
                                                   "interval":300})
 
-flow.set_dependencies(save_project_sqlite, keyword_tasks={"new_projects":scraping_projects})
+flow.set_dependencies(save_project_sqlite, upstream_tasks=[request_api_2],
+                      keyword_tasks={"new_projects":scraping_projects})
 
 if __name__ == '__main__':
     flow.register(project_name="camara_bot")
