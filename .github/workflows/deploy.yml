@@ -15,7 +15,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }} # User of the server you want to ssh into
      
           script: | 
-            cd projects 
-            git clone git@github.com:SamuelSSan28/camara_bot_2.0.git
-            python camara_bot_2.0/tasks/orchestration_flow.py 
-            echo 'Deployment successful to digital ocean' 
+            cd projects/camara_bot_2.0
+            git pull origin main
+            echo 'Deployment successful to digital ocean'
+            python3 camara_bot_2.0/tasks/orchestration_flow.py 
+            echo 'Register flow successful' 
