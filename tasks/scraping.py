@@ -68,7 +68,7 @@ class ScrapingPage(Task):
 
                 projetos.append({"protocolo": protocolo, "tipo": tipo, "data": data, "situacao": situacao,
                                             "autor": autor, "resumo": resumo, "setor": setor, "fase": fase,
-                                            "autores": autores,"processos":processo})
+                                            "autores": autores,"processo":processo})
             if page < 6:
                 page += 1
 

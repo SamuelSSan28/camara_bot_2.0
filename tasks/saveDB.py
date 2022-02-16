@@ -14,13 +14,13 @@ class SaveDB(Task):
             self.logger.error(f"Erro ao salvar os projetos no banco {err}")
 
     def saveDB(self,new_projects):
-        for key in new_projects.keys():
-            dados = {"processo" : key,
-                     "protocolo" : new_projects[key]["protocolo"],
-                     "data" : new_projects[key]["data"],
-                     "titulo" : new_projects[key]["resumo"],
-                     "situacao" : new_projects[key]["situacao"],
-                     "vereador" : new_projects[key]["autor"],
-                     "tipo" : new_projects[key]["tipo"] }
+        for new_project in new_projects:
+            dados = {"processo" : new_project["processo"],
+                     "protocolo" : new_project["protocolo"],
+                     "data" : new_project["data"],
+                     "titulo" : new_project["resumo"],
+                     "situacao" : new_project["situacao"],
+                     "vereador" : new_project["autor"],
+                     "tipo" : new_project["tipo"] }
             Projetos.insert(dados).execute()
 
