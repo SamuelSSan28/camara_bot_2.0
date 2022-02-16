@@ -11,7 +11,7 @@ env_values = dotenv_values(".env")  # take values from .env.
 
 flow = Flow("Camara_Bot")
 get_last_process_task = GetLastProcess(name="GetLastProcess")
-scraping_projects = ScrapingPage(name="ScrapingPage", max_retries=3, retry_delay=datetime.timedelta(minutes=10))
+scraping_projects = ScrapingPage(name="ScrapingPage", max_retries=3, retry_delay=datetime.timedelta(minutes=3))
 save_project_sqlite = SaveDB(name="SaveDB")
 request_api_1 = RequestAPI(name="Request API")
 MY_ENDPOINT = env_values['MY_ENDPOINT']
