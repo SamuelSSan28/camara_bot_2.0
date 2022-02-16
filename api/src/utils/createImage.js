@@ -106,7 +106,7 @@ async function createImage(processo){
     })
     return path;
     }catch (err){
-        throw new Error('Erro ao gerar a imagem');
+        throw new Error('Erro ao gerar a imagem: ' + err);
     }
     
 }

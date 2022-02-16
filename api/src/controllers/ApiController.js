@@ -3,13 +3,12 @@ const post_instagram = require('../utils/postInstagram')
 
 class ApiController{
     async gerar_imagem(req,res){
-        console.log(req.body);
-        const processo = req.body;
         try{
+            const processo = req.body;
             var path = await create_image(processo);
             return res.status(200).json({ path: path })
         } catch(err) {
-            err.message;
+            console.log(err.message)
             return res.status(400).json({ error: 'Erro em gerar imagens.' })
         }
     }
@@ -21,10 +20,12 @@ class ApiController{
 
     async post_inst(req,res){
         try{
+            console.log("Postar ->",req.body);
             const path = req.body.path;
             const result = await post_instagram(path);   
             return res.status(200).json({ path: result })
         }catch(err) {
+            console.log(err.message)
             return res.status(400).json({ error: 'Erro em postar imagens.' + err.message })
         }  
     }

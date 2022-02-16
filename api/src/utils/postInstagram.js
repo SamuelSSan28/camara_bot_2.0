@@ -8,31 +8,21 @@ async function post_instagram(path){
     const { USERNAME_INSTAGRAM, PASSWORD_INSTAGRAM } = process.env; 
     
     const client = new Instagram({ username:USERNAME_INSTAGRAM, password:PASSWORD_INSTAGRAM })
-      
 
     await (async() => {
       await client.login()
-      //console.log("Postando no Instagram")
-      
-        try {    
-          
-          await client.uploadPhoto({photo: path, caption: "#custopiaui  #leisteresina ", post: 'feed' });
-          //console.log("postada")
-          fs.unlink(path, (err) => {
+      await client.uploadPhoto({photo: path, caption: "#custopiaui  #leisteresina ", post: 'feed' });
+      await fs.unlink(path, (err) => {
               if (err) {
-                console.log("Erro ao deletar a imagem"+err)
+                throw new Error("Erro ao deletar a imagem "+err)
               }
-            });
-          return path
-        } catch (err) {
-          console.log("Erre na requisiçaõ "+err)
-        }
-        
-        
+      });
+      return path
+
     })()
 
   }catch(erro){
-    throw new Error('Erro ao realizar o post');
+    throw new Error('Erro ao realizar o post: '+erro);
   }
   
 }
