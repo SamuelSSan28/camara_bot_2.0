@@ -19,5 +19,6 @@ jobs:
             export PYTHONPATH="${PYTHONPATH}:/root/projects/camara_bot_2.0/orm_database"
             git pull origin main
             echo 'Deployment successful to digital ocean'
-            python3 tasks/orchestration_flow.py 
+            cd tasks
+            python3 orchestration_flow.py 
             echo 'Register flow successful' 
