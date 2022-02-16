@@ -3,3 +3,5 @@
 /tasks/__pycache__
 /api/src/images
 /api/.env
+.env
+/tasks/.env
