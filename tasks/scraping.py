@@ -10,9 +10,9 @@ class ScrapingPage(Task):
     def run(self,last_project):
         self.logger.info("Iniciando o scraping dos projetos no site da camara")
         try:
-            env_values = dotenv_values("/.env")
+            env_values = dotenv_values(".env")
             MY_SO = env_values['MY_SO']
-            projects =  self.scrapingPage(last_project)
+            projects =  self.scrapingPage(last_project,MY_SO)
             self.logger.info(f"Spraping realizado com sucesso. Projetos encontrados: {projects}")
             return projects
         except Exception as err:
