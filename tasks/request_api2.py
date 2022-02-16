@@ -14,7 +14,9 @@ class RequestAPI2(Task):
 
         for pload in ploads:
             try:
-                self.postRequest(url, pload)
+                response = self.postRequest(url, pload)
+                if response and response.status_code == 400:
+                    raise signals.FAIL("Erro no request")
                 self.logger.info(f"Esperar {interval} segundos para o prox request")
                 time.sleep(interval)
             except Exception as err:
