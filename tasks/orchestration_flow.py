@@ -1,5 +1,5 @@
 import datetime
-from prefect import Flow, unmapped,task
+from prefect import Flow, unmapped
 from getLastProcess import GetLastProcess
 from scraping import ScrapingPage
 from saveDB import SaveDB

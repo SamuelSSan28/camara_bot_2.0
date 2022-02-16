@@ -2,26 +2,36 @@ from prefect import Task
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
+from prefect.engine import signals
+from dotenv import dotenv_values
 
 class ScrapingPage(Task):
 
     def run(self,last_project):
         self.logger.info("Iniciando o scraping dos projetos no site da camara")
         try:
-            projects =  self.scrapingPage(last_project)
+            env_values = dotenv_values(".env")
+            MY_SO = env_values['MY_SO']
+            projects =  self.scrapingPage(last_project,MY_SO)
             self.logger.info(f"Spraping realizado com sucesso. Projetos encontrados: {projects}")
             return projects
         except Exception as err:
             self.logger.error(f"Erro no scraping {err}")
+            raise signals.FAIL("Error: " + err)
 
-    def scrapingPage(self, last_project):
+    def scrapingPage(self, last_project,MY_SO):
         page = 0
         projetos = []
         options = Options()
         options.add_argument('--headless')
         options.add_argument("--no-sandbox");
         options.add_argument("--disable-dev-shm-usage");
-        driver = webdriver.Chrome('./chromedriver.exe', options=options)
+        driver = None
+        if MY_SO == "WIN":
+            driver = webdriver.Chrome('./chromedriver.exe', options=options)
+        elif MY_SO == "LINUX":
+            driver = webdriver.Chrome('./chromedriver', options=options)
+
         driver.set_page_load_timeout(10000)
 
         self.logger.info("Faz request")

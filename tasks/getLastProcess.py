@@ -1,6 +1,5 @@
 from prefect import Task
-import os
-import sys
+from prefect.engine import signals
 
 from models import Projetos
 
@@ -14,7 +13,8 @@ class GetLastProcess(Task):
 			return last_process
 
 		except (KeyError, TypeError) as err:
-			self.logger.error(f"Erro ao buscar o processo" )
+			self.logger.error(f"Erro ao buscar o processo: ",err )
+			raise signals.FAIL("Error: "+err)
 
 
 	def getLastProcess(self):
