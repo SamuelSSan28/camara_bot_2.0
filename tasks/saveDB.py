@@ -1,5 +1,6 @@
 from prefect import Task
-from models import Projetos, Vereadores
+from models import Projetos
+from prefect.engine import signals
 import json
 
 class SaveDB(Task):
@@ -8,6 +9,9 @@ class SaveDB(Task):
         self.logger.info("Salvando os processos no banco")
         try:
             self.logger.info(f"{new_projects}")
+            if new_projects and len(new_projects) == 0:
+                raise signals.SKIP("Nenhum projeto encontrado")
+
             self.saveDB(new_projects)
             self.logger.info(f"Projetos salvos no banco com sucesso")
         except Exception as err:

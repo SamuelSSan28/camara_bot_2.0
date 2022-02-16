@@ -2,11 +2,16 @@ from prefect import Task
 import json
 import requests
 import time
+from prefect.engine import signals
 
 class RequestAPI2(Task):
 
     def run(self,url,ploads,interval):
         self.logger.info(f"Chamando API: {url}")
+
+        if ploads and len(ploads) == 0:
+            raise signals.SKIP("Nenhum projeto encontrado")
+
         for pload in ploads:
             try:
                 self.postRequest(url, pload)
