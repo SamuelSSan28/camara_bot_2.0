@@ -3,7 +3,7 @@ import os
 
 # Aqui criamos o banco de dados
 dirname = os.path.dirname(__file__)
-filename = os.path.join(dirname, 'camara.db')
+filename = os.path.join(dirname, './camara.db')
 db = peewee.SqliteDatabase(filename)
 
 
