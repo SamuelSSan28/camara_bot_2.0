@@ -18,5 +18,5 @@ jobs:
             cd projects/camara_bot_2.0
             git pull origin main
             echo 'Deployment successful to digital ocean'
-            python3 camara_bot_2.0/tasks/orchestration_flow.py 
+            python3 tasks/orchestration_flow.py 
             echo 'Register flow successful' 
