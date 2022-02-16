@@ -16,7 +16,7 @@ class ScrapingPage(Task):
 
     def scrapingPage(self, last_project):
         page = 0
-        projetos = {}
+        projetos = []
         options = Options()
         options.add_argument('--headless')
         options.add_argument("--no-sandbox");
@@ -66,10 +66,9 @@ class ScrapingPage(Task):
                 endereco_fase = '//*[@id="tabela"]/tbody/tr[' + str(i) + ']/td/div[9]'
                 fase = driver.find_element_by_xpath(endereco_fase).text.split(": ")[1]
 
-                projetos.update({processo: {"protocolo": protocolo, "tipo": tipo, "data": data, "situacao": situacao,
+                projetos.append({"protocolo": protocolo, "tipo": tipo, "data": data, "situacao": situacao,
                                             "autor": autor, "resumo": resumo, "setor": setor, "fase": fase,
-                                            "autores": autores}})
-
+                                            "autores": autores,"processos":processo})
             if page < 6:
                 page += 1
 

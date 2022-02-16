@@ -1,29 +1,30 @@
-from prefect import Flow
-from prefect.executors import LocalExecutor
-
+import datetime
+from prefect import Flow, unmapped,task
 from getLastProcess import GetLastProcess
-from project2json import Projects2Json
+from scraping import ScrapingPage
+from saveDB import SaveDB
+from request_api import RequestAPI
 
-with Flow("Camara_Bot_Flow") as flow:
+flow = Flow("Camara_Bot")
+get_last_process_task = GetLastProcess(name="GetLastProcess")
+scraping_projects = ScrapingPage(name="ScrapingPage", max_retries=3, retry_delay=datetime.timedelta(minutes=10))
+save_project_sqlite = SaveDB(name="SaveDB")
+request_api_1 = RequestAPI(name="Request API")
+request_api_2 = RequestAPI(name="Request API")
 
-    get_last_process_task = GetLastProcess()
-    save_project_2_json = Projects2Json()
+flow.set_dependencies(scraping_projects,
+                      upstream_tasks=[get_last_process_task],
+                      keyword_tasks={"last_project": get_last_process_task})
 
-    flow.add_task(get_last_process_task)
-    
-    last_process = get_last_process_task.run()
+flow.set_dependencies(request_api_1, keyword_tasks={"pload":scraping_projects,
+                                                  "url":unmapped("http://localhost:3000/gerar_imagem"),
+                                                  "ploadIsSTR":unmapped(False)}, mapped=True)
 
-    new_projects = []
+flow.set_dependencies(request_api_2, keyword_tasks={"pload":request_api_1,
+                                                  "url":unmapped("http://localhost:3000/postar"),
+                                                  "ploadIsSTR":unmapped(True)}, mapped=True)
 
-    save_project_2_json.run(new_projects)
-    
-    state = flow.run()
+flow.set_dependencies(save_project_sqlite, keyword_tasks={"new_projects":scraping_projects})
 
-    assert state.is_successful()
-
-
-#flow.register(project_name="second")
-
-        
-            
-                           
+if __name__ == '__main__':
+    flow.run()
