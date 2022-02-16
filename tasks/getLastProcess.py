@@ -1,4 +1,7 @@
 from prefect import Task
+import os
+import sys
+
 from models import Projetos
 
 class GetLastProcess(Task):
