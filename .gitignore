@@ -1,0 +1,7 @@
+/api/node_modules
+/orm_database/__pycache__
+/tasks/__pycache__
+/api/src/images
+/api/.env
+.env
+/tasks/.env
