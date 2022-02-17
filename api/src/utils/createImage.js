@@ -11,6 +11,7 @@ async function createImage(processo){
     }
     
     await nodeHtmlToImage({
+        puppeteerArgs: { args: ["--no-sandbox","--disable-setuid-sandbox"] },
         output: path,
         html: `
         <html>

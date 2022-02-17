@@ -1,6 +1,7 @@
 from prefect import Task
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 from prefect.engine import signals
 from dotenv import dotenv_values
@@ -31,7 +32,7 @@ class ScrapingPage(Task):
         if MY_SO == "WIN":
             driver = webdriver.Chrome('./chromedriver.exe', options=options)
         elif MY_SO == "LINUX":
-            driver = webdriver.Chrome('./chromedriver', options=options)
+            driver = webdriver.Chrome(ChromeDriverManager().install(),options=options)
 
         driver.set_page_load_timeout(10000)
 
