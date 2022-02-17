@@ -3,8 +3,8 @@ const nodeHtmlToImage = require('node-html-to-image');
 async function createImage(processo){
     try{
         var autores_li = "";
-    const { MY_PATH, PASSWORD_INSTAGRAM } = process.env;
-    const path = `{MY_PATH}/src/images/image_${processo.protocolo}.jpeg`
+    const { MY_PATH } = process.env;
+    const path = `${MY_PATH}/src/images/image_${processo.protocolo}.jpeg`
     console.log(path)
 
     for (const element of processo.autores){
