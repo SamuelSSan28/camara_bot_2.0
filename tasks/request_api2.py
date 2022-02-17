@@ -1,3 +1,4 @@
+# coding=utf8
 from prefect import Task
 import json
 import requests

@@ -1,3 +1,4 @@
+# coding=utf8
 import datetime
 from prefect import Flow, unmapped
 from getLastProcess import GetLastProcess
@@ -10,7 +11,7 @@ from datetime import timedelta
 from prefect.schedules import IntervalSchedule
 
 env_values = dotenv_values(".env")  # take values from .env
-# .
+
 schedule = IntervalSchedule(interval=timedelta(hours=12))
 
 flow = Flow("Camara_Bot",schedule)
