@@ -6,10 +6,14 @@ from saveDB import SaveDB
 from request_api import RequestAPI
 from request_api2 import RequestAPI2
 from dotenv import dotenv_values
+from datetime import timedelta
+from prefect.schedules import IntervalSchedule
 
-env_values = dotenv_values(".env")  # take values from .env.
+env_values = dotenv_values(".env")  # take values from .env
+# .
+schedule = IntervalSchedule(interval=timedelta(hours=12))
 
-flow = Flow("Camara_Bot")
+flow = Flow("Camara_Bot",schedule)
 get_last_process_task = GetLastProcess(name="GetLastProcess")
 scraping_projects = ScrapingPage(name="ScrapingPage", max_retries=3, retry_delay=datetime.timedelta(minutes=3))
 save_project_sqlite = SaveDB(name="SaveDB")
@@ -33,5 +37,4 @@ flow.set_dependencies(save_project_sqlite, upstream_tasks=[request_api_2],
                       keyword_tasks={"new_projects":scraping_projects})
 
 if __name__ == '__main__':
-    flow.register(project_name="camara_bot")
-    #flow.run()
+    flow.run()

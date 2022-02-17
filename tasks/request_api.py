@@ -1,5 +1,5 @@
 from prefect import Task
-import json
+from prefect.engine import signals
 import requests
 
 class RequestAPI(Task):
@@ -9,6 +9,10 @@ class RequestAPI(Task):
         try:
             response = self.postRequest(url,pload)
             self.logger.info(f"Request realizado: {response}")
+
+            if response and response.status_code == 400:
+                raise signals.FAIL("Erro no request")
+
             return response.text
         except Exception as err:
             self.logger.error(f"Erro no request {err}")

@@ -3,14 +3,16 @@ const nodeHtmlToImage = require('node-html-to-image');
 async function createImage(processo){
     try{
         var autores_li = "";
-    const path = `./src/images/image_${processo.protocolo}.jpeg`
-
+    const { MY_PATH } = process.env;
+    const path = `${MY_PATH}/src/images/image_${processo.protocolo}.jpeg`
+    console.log(path)
 
     for (const element of processo.autores){
         autores_li += `<li class="item">${element}</li>`
     }
     
     await nodeHtmlToImage({
+        puppeteerArgs: { args: ["--no-sandbox","--disable-setuid-sandbox"] },
         output: path,
         html: `
         <html>
@@ -102,12 +104,13 @@ async function createImage(processo){
         </html>
         `
     }).then(() => {
-        
+        return path;
     })
     return path;
     }catch (err){
         throw new Error('Erro ao gerar a imagem: ' + err);
     }
+    return path;
     
 }
       
