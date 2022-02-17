@@ -1,7 +1,7 @@
+# coding=utf8
 from prefect import Task
 from models import Projetos
 from prefect.engine import signals
-import json
 
 class SaveDB(Task):
 
